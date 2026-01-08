@@ -347,16 +347,18 @@ function SkillTreeManager:_verify_loaded_data(points_aquired_during_load)
 			for tier, spec_data in ipairs(specialization_tweak[tree]) do
 				if spec_data.cost <= points_left then
 					points_left = points_left - spec_data.cost
-					local multi_choice = spec_data.multi_choice
-					local choice_index = data.choices[tier] and self:digest_value(data.choices[tier], false)
+					if data.choices then
+						local multi_choice = spec_data.multi_choice
+						local choice_index = data.choices[tier] and self:digest_value(data.choices[tier], false)
 
-					if not multi_choice or not choice_index or not multi_choice[choice_index] then
-						if multi_choice and multi_choice[1] then
-							data.choices[tier] = self:digest_value(1, true)
-							choice_index = 1
-						else
-							data.choices[tier] = nil
-							choice_index = nil
+						if not multi_choice or not choice_index or not multi_choice[choice_index] then
+							if multi_choice and multi_choice[1] then
+								data.choices[tier] = self:digest_value(1, true)
+								choice_index = 1
+							else
+								data.choices[tier] = nil
+								choice_index = nil
+							end
 						end
 					end
 
