@@ -415,3 +415,19 @@ function SkillTreeManager:_verify_loaded_data(points_aquired_during_load)
 		end
 	end
 end
+
+if type(SkillTreeManager.max_points_for_current_level) == "nil" then
+	function SkillTreeManager:max_points_for_current_level()
+		local rep_upgrade_points = 0
+
+		for _, rep_upgrade in ipairs(managers.upgrades:aquired_by_category("rep_upgrade")) do
+			rep_upgrade_points = rep_upgrade_points + managers.upgrades:get_value(rep_upgrade)
+		end
+
+		return managers.experience:current_level() + rep_upgrade_points
+	end
+
+	function SkillTreeManager:is_skill_switch_suspended(switch_data)
+		return self:max_points_for_current_level() < self:total_points_spent(switch_data)
+	end
+end

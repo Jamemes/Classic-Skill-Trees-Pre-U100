@@ -2751,9 +2751,19 @@ tweak_data.mission_door.reinforced_door_single.devices.c4[1].unit = Idstring("un
 tweak_data.mission_door.keycard_door_single.devices.c4[1].unit = Idstring("units/payday2/equipment/gen_equipment_shape_charge/gen_equipment_shape_charge")
 tweak_data.mission_door.keycard_door_single.devices.c4[2].unit = Idstring("units/payday2/equipment/gen_equipment_shape_charge/gen_equipment_shape_charge")
 tweak_data.mission_door.cage_door_deluxe.devices.c4[1].unit = Idstring("units/payday2/equipment/gen_equipment_shape_charge/gen_equipment_shape_charge")
-tweak_data.mission_door.cage_door_deluxe_non_jamming.devices.c4[1].unit = Idstring("units/payday2/equipment/gen_equipment_shape_charge/gen_equipment_shape_charge")
-tweak_data.mission_door.cage_door_ranc.devices.c4[1].unit = Idstring("units/payday2/equipment/gen_equipment_shape_charge/gen_equipment_shape_charge")
-tweak_data.mission_door.cage_door_deluxe_deep.devices.c4[1].unit = Idstring("units/payday2/equipment/gen_equipment_shape_charge/gen_equipment_shape_charge")
+
+if tweak_data.mission_door.cage_door_deluxe_non_jamming then
+	tweak_data.mission_door.cage_door_deluxe_non_jamming.devices.c4[1].unit = Idstring("units/payday2/equipment/gen_equipment_shape_charge/gen_equipment_shape_charge")
+end
+
+if tweak_data.mission_door.cage_door_ranc then
+	tweak_data.mission_door.cage_door_ranc.devices.c4[1].unit = Idstring("units/payday2/equipment/gen_equipment_shape_charge/gen_equipment_shape_charge")
+end
+
+if tweak_data.mission_door.cage_door_deluxe_deep then
+	tweak_data.mission_door.cage_door_deluxe_deep.devices.c4[1].unit = Idstring("units/payday2/equipment/gen_equipment_shape_charge/gen_equipment_shape_charge")
+end
+
 tweak_data.interaction.sentry_gun.requires_upgrade = {
 	upgrade = "can_reload",
 	category = "sentry_gun"

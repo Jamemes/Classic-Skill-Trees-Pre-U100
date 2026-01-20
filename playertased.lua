@@ -1,3 +1,29 @@
+local function get_contour_for_marked_enemy(enemy_type)
+	local contour_type = "mark_enemy"
+
+	if enemy_type == "swat_turret" or enemy_type == "sentry_gun" then
+		contour_type = "mark_unit_dangerous"
+
+		if managers.player:has_category_upgrade("player", "marked_enemy_extra_damage") then
+			contour_type = "mark_unit_dangerous_damage_bonus"
+		end
+
+		if managers.player:has_category_upgrade("player", "marked_inc_dmg_distance") then
+			contour_type = "mark_unit_dangerous_damage_bonus_distance"
+		end
+	else
+		if managers.player:has_category_upgrade("player", "marked_enemy_extra_damage") then
+			contour_type = "mark_enemy_damage_bonus"
+		end
+
+		if managers.player:has_category_upgrade("player", "marked_inc_dmg_distance") then
+			contour_type = "mark_enemy_damage_bonus_distance"
+		end
+	end
+
+	return contour_type
+end
+
 function PlayerTased:call_teammate(line, t, no_gesture, skip_alert)
 	local voice_type, plural, prime_target = self:_get_unit_intimidation_action(true, false, false, true, false)
 	local interact_type, queue_name = nil
@@ -15,7 +41,7 @@ function PlayerTased:call_teammate(line, t, no_gesture, skip_alert)
 			queue_name = "s07x_sin"
 
 			if managers.player:has_category_upgrade("player", "special_enemy_highlight") then
-				prime_target.unit:contour():add(managers.player:get_contour_for_marked_enemy(), true, managers.player:upgrade_value("player", "mark_enemy_time_multiplier", 1))
+				prime_target.unit:contour():add(get_contour_for_marked_enemy(), true, managers.player:upgrade_value("player", "mark_enemy_time_multiplier", 1))
 			end
 			if not self._tase_ended and managers.player:has_category_upgrade("player", "taser_self_shock") and prime_target.unit:key() == self._unit:character_damage():tase_data().attacker_unit:key() then
 				self:_start_action_counter_tase(t, prime_target)
