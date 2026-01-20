@@ -1,4 +1,7 @@
-SkillTreeManager.VERSION = 10
+function SkillTreeManager:skill_cost(tier, skill_level, skill_cost)
+	return 0
+end
+
 function SkillTreeManager:_create_tree_data(tree_id)
 	self._global.trees[tree_id] = {
 		unlocked = false,
@@ -421,7 +424,8 @@ if type(SkillTreeManager.max_points_for_current_level) == "nil" then
 		local rep_upgrade_points = 0
 
 		for _, rep_upgrade in ipairs(managers.upgrades:aquired_by_category("rep_upgrade")) do
-			rep_upgrade_points = rep_upgrade_points + managers.upgrades:get_value(rep_upgrade)
+			local value = tweak_data.upgrades.definitions[rep_upgrade] and tweak_data.upgrades.definitions[rep_upgrade].value or 0
+			rep_upgrade_points = rep_upgrade_points + value
 		end
 
 		return managers.experience:current_level() + rep_upgrade_points
@@ -429,5 +433,15 @@ if type(SkillTreeManager.max_points_for_current_level) == "nil" then
 
 	function SkillTreeManager:is_skill_switch_suspended(switch_data)
 		return self:max_points_for_current_level() < self:total_points_spent(switch_data)
+	end
+
+	function SkillTreeManager:total_points_spent(switch_data)
+		local points = 0
+
+		for tree, data in pairs(tweak_data.skilltree.trees) do
+			points = points + self:points_spent(tree, switch_data)
+		end
+
+		return points
 	end
 end

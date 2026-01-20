@@ -3,7 +3,7 @@
     "description" : "Restored old skill trees before Update 100.",
     "author" : "James",
     "contact" : "https://steamcommunity.com/id/jokes_on_you",
-    "version" : "3",
+    "version" : "4",
 	"updates" : [
 		{
 			"identifier" : "classic-skilltrees",
